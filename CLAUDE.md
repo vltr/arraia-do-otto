@@ -60,8 +60,26 @@ CREATE TABLE IF NOT EXISTS rsvps (
 - `pnpm dev` — Vite dev server (frontend only).
 - `pnpm build` — production build to `dist/`.
 - `pnpm preview` — preview the built site.
-- `pnpm pages:dev` — `wrangler pages dev` (serves `dist/` + Pages Functions + D1 locally; for testing `/api/rsvp`).
+- `pnpm pages:dev` — `wrangler pages dev` (serves `dist/` + Pages Functions + D1 locally; for testing `/api/rsvp`). Build first.
+- `wrangler d1 execute rsvp-db --local --file ./schema.sql` — apply schema to the local D1.
+- `wrangler d1 execute rsvp-db --local --command "SELECT * FROM rsvps"` — read local rows.
 - Image assets go in `public/img/*.webp` (see [docs/IMAGES.md](docs/IMAGES.md)).
+- pnpm build-script approvals live in `pnpm-workspace.yaml` (`allowBuilds:` esbuild/workerd/sharp).
+
+## RSVP backend (`functions/api/rsvp.js`)
+
+`POST /api/rsvp` accepts JSON `{ name, attending (1|0), dietary, fax (honeypot), turnstileToken }`.
+Order: reject bad JSON (400) → honeypot `fax` non-empty returns `{ok:true}` with NO insert →
+validate name (400 if empty / >120) → verify Turnstile **only if `TURNSTILE_SECRET_KEY` is set**
+(403 on fail) → insert into D1 → `{ok:true}`. Tested locally; honeypot/validation/405/400 all pass.
+
+### Deploy steps (need Cloudflare login — deploy phase)
+
+1. `wrangler login`
+2. `wrangler d1 create rsvp-db` → paste returned `database_id` into `wrangler.jsonc`.
+3. `wrangler d1 execute rsvp-db --remote --file ./schema.sql`
+4. Create Pages project; set env vars: `TURNSTILE_SECRET_KEY` (secret) + `VITE_TURNSTILE_SITE_KEY` (build var). Turnstile keys from the CF dashboard.
+5. `wrangler pages deploy dist` (or connect the repo). Custom domain TBD.
 
 ## Layout
 

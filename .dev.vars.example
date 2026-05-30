@@ -1,0 +1,5 @@
+# Server-side secrets for `wrangler pages dev` (copy to .dev.vars, which is gitignored).
+# In production these are set as Pages env vars / secrets, NOT committed.
+
+# Turnstile secret key (server). Leave unset locally to skip verification while testing.
+# TURNSTILE_SECRET_KEY=0x0000000000000000000000000000000000000000

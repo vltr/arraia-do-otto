@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "arraia-do-otto",
+  "compatibility_date": "2025-05-05",
+  "pages_build_output_dir": "dist",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "rsvp-db",
+      // Filled in after `wrangler d1 create rsvp-db` (deploy phase).
+      "database_id": "PLACEHOLDER_AFTER_D1_CREATE"
+    }
+  ]
+}
