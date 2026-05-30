@@ -19,6 +19,7 @@
 
   /* Type */
   --font-display: "Rye", ui-serif, Georgia, serif;
+  --font-hand: "Caveat", ui-cursive, cursive;
   --font-body: "Nunito", ui-sans-serif, system-ui, sans-serif;
 }
 

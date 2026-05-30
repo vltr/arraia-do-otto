@@ -27,6 +27,8 @@ Authoritative specs live in [docs/](docs/): [docs/SPEC.md](docs/SPEC.md) (full b
 
 ## Decisions made with the owner (override the spec docs)
 
+- **Language: pt-BR ONLY.** Every guest-facing string is Brazilian Portuguese (caipirês). Never introduce English UI text, labels, or alt text. `<html lang="pt-BR">`.
+
 - **RSVP fields are MINIMAL** (per RSVP-HANDOFF, not SPEC §8): `name`, `attending` (yes/no), `dietary` (optional). Plus a hidden honeypot + Turnstile. Do not add adultos/crianças/status-talvez/recado unless the owner asks.
 - **Copy:** base copy comes from SPEC §5 (caipirês). Run the `humanizer` skill over the **user-facing text guests actually read** before finalizing it — that's the only place humanization is applied (owner's call).
 - **Images:** generated externally on **Picsart** from prompts in [docs/IMAGES.md](docs/IMAGES.md) (raw source: [docs/IMAGE-PROMPTS.md](docs/IMAGE-PROMPTS.md)). Otto's real photo is the reference for every scene. Site stitches scenes together with CSS.

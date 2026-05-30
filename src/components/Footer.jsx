@@ -1,0 +1,95 @@
+import { useEffect, useRef, useState } from "react";
+import { motion } from "motion/react";
+import { event } from "../data/event.js";
+import { whatsappShareUrl } from "../lib/links.js";
+import OttoImage from "./OttoImage.jsx";
+import Button from "./Button.jsx";
+
+const FORRO_SRC = "/audio/forro.mp3";
+
+// Optional background forró — off by default. The toggle only appears if the
+// audio file actually exists in /public/audio, so it never shows a dead control.
+function ForroToggle() {
+  const audioRef = useRef(null);
+  const [available, setAvailable] = useState(false);
+  const [playing, setPlaying] = useState(false);
+
+  useEffect(() => {
+    const a = new Audio();
+    a.src = FORRO_SRC;
+    a.loop = true;
+    a.preload = "auto";
+    const ok = () => setAvailable(true);
+    a.addEventListener("canplaythrough", ok, { once: true });
+    audioRef.current = a;
+    return () => {
+      a.pause();
+      a.removeEventListener("canplaythrough", ok);
+    };
+  }, []);
+
+  if (!available) return null;
+
+  function toggle() {
+    const a = audioRef.current;
+    if (!a) return;
+    if (playing) {
+      a.pause();
+      setPlaying(false);
+    } else {
+      a.play().then(() => setPlaying(true)).catch(() => {});
+    }
+  }
+
+  return (
+    <button
+      onClick={toggle}
+      className="font-body text-sm font-bold text-[var(--color-festa-cream)]/80 underline-offset-4 hover:underline"
+    >
+      {playing ? "🔇 Parar o forró" : "🎶 Botar um forró"}
+    </button>
+  );
+}
+
+export default function Footer() {
+  return (
+    <footer className="relative flex flex-col items-center px-5 pb-12 pt-10 text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.6 }}
+        className="w-full max-w-[min(70vw,280px)]"
+      >
+        <div className="aspect-[9/16] w-full overflow-hidden rounded-3xl border-4 border-[var(--color-festa-orange)]/70 shadow-[0_0_40px_rgba(240,138,36,0.45)]">
+          <OttoImage
+            src="/img/footer-despedida.webp"
+            alt="Otto sentado perto de uma fogueirinha acenando tchau, no fim da festa."
+            label="despedida"
+          />
+        </div>
+      </motion.div>
+
+      <p className="font-hand mt-6 text-3xl text-[var(--color-festa-corn)] drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+        {event.recados.espera}
+      </p>
+
+      <div className="mt-6 flex flex-col items-center gap-4">
+        <Button
+          as="a"
+          href={whatsappShareUrl(typeof window !== "undefined" ? window.location.href : "")}
+          target="_blank"
+          rel="noopener"
+          variant="green"
+        >
+          💬 Chamar a galera no Zap
+        </Button>
+        <ForroToggle />
+      </div>
+
+      <p className="font-body mt-10 text-xs text-[var(--color-festa-cream)]/50">
+        {event.title} · {event.dateLabel}
+      </p>
+    </footer>
+  );
+}
