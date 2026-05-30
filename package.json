@@ -1,0 +1,26 @@
+{
+  "name": "arraia-do-otto",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "One-page festa-junina RSVP site for Otto's 1st birthday",
+  "packageManager": "pnpm@11.3.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "pages:dev": "wrangler pages dev"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.0",
+    "@vitejs/plugin-react": "^6.0.2",
+    "tailwindcss": "^4.3.0",
+    "vite": "^8.0.14"
+  },
+  "dependencies": {
+    "canvas-confetti": "^1.9.4",
+    "motion": "^12.40.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  }
+}

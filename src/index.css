@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+/* ---- Festa junina design tokens (Tailwind v4 @theme) ---- */
+@theme {
+  /* Festa palette */
+  --color-festa-red: #d2382c;
+  --color-festa-orange: #f08a24;
+  --color-festa-corn: #f6c544;
+  --color-festa-green: #3f9e54;
+  --color-festa-wood: #7a4a28;
+  --color-festa-wood-dark: #4a2c18;
+  --color-festa-cream: #fff5e1;
+
+  /* Sky stops for the scroll-linked background (noon → golden → dusk/bonfire) */
+  --color-sky-noon: #2b9bd4;
+  --color-sky-golden: #f3a23a;
+  --color-sky-dusk: #8a3b6b;
+  --color-sky-bonfire: #2a1638;
+
+  /* Type */
+  --font-display: "Rye", ui-serif, Georgia, serif;
+  --font-body: "Nunito", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ---- Base ---- */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-festa-wood-dark);
+  background-color: var(--color-sky-noon);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Respect reduced-motion: disable smooth scroll + heavy animation */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
