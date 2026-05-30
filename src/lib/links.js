@@ -18,9 +18,3 @@ export function wazeUrl() {
   const p = new URLSearchParams({ q: QUERY });
   return `https://waze.com/ul?${p.toString()}`;
 }
-
-export function whatsappShareUrl(siteUrl = "") {
-  const text = `${event.welcome} Vem pro ${event.title} — ${event.dateLabel}, ${event.timeLabel}, na ${event.venue}. ${event.recados.ctaRsvp} ${siteUrl}`.trim();
-  const p = new URLSearchParams({ text });
-  return `https://wa.me/?${p.toString()}`;
-}

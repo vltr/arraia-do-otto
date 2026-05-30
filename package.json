@@ -9,11 +9,14 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "pages:dev": "wrangler pages dev"
+    "pages:dev": "wrangler pages dev",
+    "og": "node scripts/make-og.mjs"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/vite": "^4.3.0",
     "@vitejs/plugin-react": "^6.0.2",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4.3.0",
     "vite": "^8.0.14",
     "wrangler": "^4.95.0"

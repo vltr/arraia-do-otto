@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS rsvps (
 - `wrangler d1 execute rsvp-db --local --file ./schema.sql` — apply schema to the local D1.
 - `wrangler d1 execute rsvp-db --local --command "SELECT * FROM rsvps"` — read local rows.
 - Image assets go in `public/img/*.webp` (see [docs/IMAGES.md](docs/IMAGES.md)).
+- `pnpm og` — regenerate the social-share card `public/og.jpg` (1200×630) from `scripts/make-og.mjs`. Fonts auto-download to `assets-raw/fonts/` (gitignored). The OG/Twitter `<meta>` URLs in `index.html` are absolute to `arraia-do-otto.pages.dev` — update them if the domain changes.
 - pnpm build-script approvals live in `pnpm-workspace.yaml` (`allowBuilds:` esbuild/workerd/sharp).
 
 ## RSVP backend (`functions/api/rsvp.js`)

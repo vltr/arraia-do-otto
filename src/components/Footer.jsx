@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { event } from "../data/event.js";
-import { whatsappShareUrl } from "../lib/links.js";
 import OttoImage from "./OttoImage.jsx";
-import Button from "./Button.jsx";
 
 const FORRO_SRC = "/audio/forro.mp3";
 
@@ -75,15 +73,6 @@ export default function Footer() {
       </p>
 
       <div className="mt-6 flex flex-col items-center gap-4">
-        <Button
-          as="a"
-          href={whatsappShareUrl(typeof window !== "undefined" ? window.location.href : "")}
-          target="_blank"
-          rel="noopener"
-          variant="green"
-        >
-          💬 Chamar a galera no Zap
-        </Button>
         <ForroToggle />
       </div>
 
