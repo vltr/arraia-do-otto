@@ -73,13 +73,13 @@ Order: reject bad JSON (400) → honeypot `fax` non-empty returns `{ok:true}` wi
 validate name (400 if empty / >120) → verify Turnstile **only if `TURNSTILE_SECRET_KEY` is set**
 (403 on fail) → insert into D1 → `{ok:true}`. Tested locally; honeypot/validation/405/400 all pass.
 
-### Deploy steps (need Cloudflare login — deploy phase)
+### Deploy
 
-1. `wrangler login`
-2. `wrangler d1 create rsvp-db` → paste returned `database_id` into `wrangler.jsonc`.
-3. `wrangler d1 execute rsvp-db --remote --file ./schema.sql`
-4. Create Pages project; set env vars: `TURNSTILE_SECRET_KEY` (secret) + `VITE_TURNSTILE_SITE_KEY` (build var). Turnstile keys from the CF dashboard.
-5. `wrangler pages deploy dist` (or connect the repo). Custom domain TBD.
+Full copy-pasteable guide: **[docs/DEPLOY.md](docs/DEPLOY.md)**. Summary: `wrangler login` →
+`d1 create rsvp-db` (paste id into `wrangler.jsonc`) → `d1 execute --remote --file schema.sql` →
+optional Turnstile (site key in `.env` before build, secret via `pages secret put`) →
+`pnpm build` → `wrangler pages deploy dist --project-name arraia-do-otto`. Ships on
+`arraia-do-otto.pages.dev`; custom domain later. **Owner runs the deploy** (their CF account).
 
 ## Layout
 
