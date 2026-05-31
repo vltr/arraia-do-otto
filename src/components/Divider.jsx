@@ -1,16 +1,29 @@
 import Bunting from "./Bunting.jsx";
 
-// Garland separators: a row of real festa elements hung on a CSS string (proper
-// spacing, gentle sway) — high quality, no stretched textures. Generated single
-// elements live in /public/img/sep-*.webp.
+// Garland separators: real festa elements on a string. Two modes:
+//  - "tight": the element is tiled edge-to-edge (background-repeat) for a dense
+//    row (milho almost touching, lanterns, candy apples). The element webp has
+//    built-in horizontal padding so the spacing is baked in.
+//  - "spaced": a few elements hung on the string with gaps + gentle sway.
 const GARLANDS = {
-  lampioes: { src: "/img/sep-lampiao.webp", h: 56, count: 8 },
-  baloes: { src: "/img/sep-balao.webp", h: 58, count: 7 },
-  milho: { src: "/img/sep-milho.webp", h: 42, count: 9 },
-  maca: { src: "/img/sep-maca.webp", h: 48, count: 8 },
+  lampioes: { src: "/img/sep-lampiao.webp", h: 54, mode: "tight" },
+  milho: { src: "/img/sep-milho.webp", h: 40, mode: "tight" },
+  maca: { src: "/img/sep-maca.webp", h: 48, mode: "tight" },
+  baloes: { src: "/img/sep-balao.webp", h: 58, count: 7, mode: "spaced" },
 };
 
-function Garland({ src, h, count }) {
+function Garland({ src, h, count, mode }) {
+  if (mode === "tight") {
+    return (
+      <div aria-hidden className="absolute inset-x-0 top-0 z-[1]" style={{ height: `${h + 6}px` }}>
+        <div className="absolute inset-x-0 top-2 h-[3px] rounded-full bg-[var(--color-festa-wood-dark)]/40" />
+        <div
+          className="absolute inset-x-0 top-0 bg-repeat-x drop-shadow-[0_4px_4px_rgba(0,0,0,0.22)]"
+          style={{ height: `${h}px`, backgroundImage: `url(${src})`, backgroundSize: `auto ${h}px`, backgroundPosition: "top center" }}
+        />
+      </div>
+    );
+  }
   return (
     <div
       aria-hidden

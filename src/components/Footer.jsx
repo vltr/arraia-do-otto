@@ -3,6 +3,7 @@ import { useReducedMotion } from "motion/react";
 import { event } from "../data/event.js";
 import OttoImage from "./OttoImage.jsx";
 import ErrorBoundary from "./ErrorBoundary.jsx";
+import Divider from "./Divider.jsx";
 
 // Code-split: Three.js loads only when the footer nears the viewport.
 const Embers = lazy(() => import("./Embers.jsx"));
@@ -74,6 +75,7 @@ export default function Footer() {
 
   return (
     <footer className="relative isolate flex min-h-dvh snap-start flex-col justify-center px-5 pb-12 pt-10 text-center">
+      <Divider type="lampioes" />
       <div ref={sentinelRef} aria-hidden className="pointer-events-none absolute -top-[40vh] h-px w-px" />
       {/* Embers are anchored INSIDE the footer (absolute), so they live at the
           bonfire and scroll with the page — not glued to the viewport. */}
