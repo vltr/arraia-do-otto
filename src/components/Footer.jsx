@@ -102,7 +102,10 @@ export default function Footer() {
         <ForroToggle />
       </div>
 
-      <p className="font-body mt-10 text-xs text-[var(--color-festa-cream)]/50">
+      <p className="font-hand mt-10 text-2xl text-[var(--color-festa-corn)]/95 drop-shadow-[0_2px_3px_rgba(0,0,0,0.5)]">
+        {event.recados.assinatura}
+      </p>
+      <p className="font-body mt-3 text-xs text-[var(--color-festa-cream)]/50">
         {event.title} · {event.dateLabel}
       </p>
       </div>
