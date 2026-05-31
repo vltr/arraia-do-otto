@@ -20,7 +20,7 @@ export const event = {
 
   // Caipirês recadinhos sprinkled through the page.
   recados: {
-    ctaRsvp: "Confirma a presença, ó!",
+    ctaRsvp: "Confirma a presença, sô!",
     espetinho: "O úrtimo que chegá é a muié do padre!",
     comidas: "Tem espetinho, paçoca, bolo de milho e muita farra!",
     espera: "Esperamo cê lá, viu?",
@@ -28,7 +28,7 @@ export const event = {
     mapaTitle: "Pra num se perdê no caminho",
     confirmado:
       "Oba! Tá confirmado, ó! Agora é só num atrasá — lembra: o úrtimo que chegá é a muié do padre! 🔥",
-    assinatura: "Fei'to com muito amô pela mamãe e pelo papai do Otto ❤️",
+    assinatura: "Feito com muuuuito amô pela mamãe e pelo papai do Otto ❤️",
   },
 };
 

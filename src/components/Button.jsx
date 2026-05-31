@@ -19,7 +19,7 @@ export default function Button({
   const Tag = as;
   return (
     <Tag
-      className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-5 py-3 font-body text-base font-extrabold transition-all duration-100 hover:-translate-y-0.5 active:translate-y-[3px] active:shadow-none ${VARIANTS[variant]} ${className}`}
+      className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-5 py-3 text-center font-body text-base font-extrabold leading-tight transition-all duration-100 hover:-translate-y-0.5 active:translate-y-[3px] active:shadow-none ${VARIANTS[variant]} ${className}`}
       {...props}
     >
       {children}

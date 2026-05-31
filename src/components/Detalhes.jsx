@@ -29,7 +29,7 @@ export default function Detalhes() {
     <Scene id="detalhes">
       <div className="reveal mx-auto max-w-md rounded-3xl border-4 border-[var(--color-festa-wood)]/40 bg-[var(--color-festa-cream)] p-7 shadow-[0_14px_30px_rgba(0,0,0,0.3)]">
         <h2 className="font-display mb-6 text-center text-3xl text-[var(--color-festa-wood-dark)]">
-          Os detalhe da festa
+          Os detalhe do festerê
         </h2>
 
         <div className="space-y-5">

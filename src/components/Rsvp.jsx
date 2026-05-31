@@ -89,7 +89,7 @@ export default function Rsvp() {
                 <div className="grid grid-cols-2 gap-2">
                   {[
                     { v: "sim", label: "Tô dentro! 🎉", on: "border-[var(--color-festa-green)] bg-[var(--color-festa-green)] text-[var(--color-festa-cream)]" },
-                    { v: "nao", label: "Num vô dá 😔", on: "border-[var(--color-festa-red)] bg-[var(--color-festa-red)] text-[var(--color-festa-cream)]" },
+                    { v: "nao", label: "Num vô podê 😔", on: "border-[var(--color-festa-red)] bg-[var(--color-festa-red)] text-[var(--color-festa-cream)]" },
                   ].map((opt) => (
                     <button
                       key={opt.v}
