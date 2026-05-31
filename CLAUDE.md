@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS rsvps (
 - `wrangler d1 execute rsvp-db --local --file ./schema.sql` — apply schema to the local D1.
 - `wrangler d1 execute rsvp-db --local --command "SELECT * FROM rsvps"` — read local rows.
 - Image assets go in `public/img/*.webp` (see [docs/IMAGES.md](docs/IMAGES.md)).
-- `pnpm og` — regenerate the social-share card `public/og.jpg` (1200×630) from `scripts/make-og.mjs`. Fonts auto-download to `assets-raw/fonts/` (gitignored). The OG/Twitter `<meta>` URLs in `index.html` are absolute to `arraia-do-otto.pages.dev` — update them if the domain changes.
+- `pnpm og` — regenerate the social-share card `public/og.jpg` (1200×630) from `scripts/make-og.mjs` (wood frame + balloon garland + "número 1" Otto from `assets-raw/og-otto.png`). Fonts auto-download to `assets-raw/fonts/` (gitignored). The OG/Twitter `<meta>` URLs in `index.html` are absolute — currently `https://ottok.com.br` (the custom domain). Update them if the domain changes.
 - pnpm build-script approvals live in `pnpm-workspace.yaml` (`allowBuilds:` esbuild/workerd/sharp).
 
 ## RSVP backend (`functions/api/rsvp.js`)
@@ -82,6 +82,8 @@ validate name (400 if empty / >120) → verify Turnstile **only if `TURNSTILE_SE
 
 ### Deploy — LIVE ✅
 
+Custom domain: **ottok.com.br** + **www.ottok.com.br** (external registrar, nameservers moved to
+Cloudflare; added as Pages custom domains). OG/Twitter meta + `og:url` point to `https://ottok.com.br`.
 Deployed 2026-05-31 to **[arraia-do-otto.pages.dev](https://arraia-do-otto.pages.dev)** (Pages project `arraia-do-otto`,
 production branch `main`). D1 `rsvp-db` id `1fd48f81-a469-459e-862a-f3b5a3eb7368`, binding `DB`,
 schema applied remote. Full prod round-trip verified (POST /api/rsvp → D1 write → delete).
