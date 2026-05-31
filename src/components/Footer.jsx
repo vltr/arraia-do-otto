@@ -1,7 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import { motion } from "motion/react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { event } from "../data/event.js";
 import OttoImage from "./OttoImage.jsx";
+import ErrorBoundary from "./ErrorBoundary.jsx";
+
+// Code-split: Three.js loads only when the footer nears the viewport.
+const Embers = lazy(() => import("./Embers.jsx"));
 
 const FORRO_SRC = "/audio/forro.mp3";
 
@@ -50,8 +54,37 @@ function ForroToggle() {
 }
 
 export default function Footer() {
+  const reduce = useReducedMotion();
+  const [showEmbers, setShowEmbers] = useState(false);
+  const sentinelRef = useRef(null);
+
+  useEffect(() => {
+    if (reduce) return;
+    const el = sentinelRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) setShowEmbers(true);
+      },
+      { rootMargin: "300px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [reduce]);
+
   return (
-    <footer className="relative flex flex-col items-center px-5 pb-12 pt-10 text-center">
+    <footer className="relative isolate px-5 pb-12 pt-10 text-center">
+      <div ref={sentinelRef} aria-hidden className="pointer-events-none absolute -top-[40vh] h-px w-px" />
+      {/* Embers are anchored INSIDE the footer (absolute), so they live at the
+          bonfire and scroll with the page — not glued to the viewport. */}
+      {showEmbers && (
+        <ErrorBoundary>
+          <Suspense fallback={null}>
+            <Embers />
+          </Suspense>
+        </ErrorBoundary>
+      )}
+      <div className="relative z-10 flex flex-col items-center">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -79,6 +112,7 @@ export default function Footer() {
       <p className="font-body mt-10 text-xs text-[var(--color-festa-cream)]/50">
         {event.title} · {event.dateLabel}
       </p>
+      </div>
     </footer>
   );
 }
