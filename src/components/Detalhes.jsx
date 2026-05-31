@@ -28,7 +28,7 @@ function Row({ icon, label, value, sub }) {
 
 export default function Detalhes() {
   return (
-    <Scene id="detalhes">
+    <Scene id="detalhes" divider="baloes">
       <WoodFrame className="reveal mx-auto max-w-md" innerClassName="p-6">
         <div className="mb-7 text-center">
           <WoodSign>Os detalhe do festerê</WoodSign>

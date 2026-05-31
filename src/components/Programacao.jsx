@@ -10,7 +10,7 @@ export default function Programacao() {
       {scenes.map((scene, i) => {
         const flip = i % 2 === 1;
         return (
-          <Scene id={scene.id} key={scene.id} divider={i % 2 === 0 ? "lampioes" : "bunting"}>
+          <Scene id={scene.id} key={scene.id} divider={["lampioes", "milho", "maca", "baloes"][i % 4]}>
             <div
               className={`flex flex-col items-center gap-8 md:justify-center md:gap-14 ${
                 flip ? "md:flex-row-reverse" : "md:flex-row"

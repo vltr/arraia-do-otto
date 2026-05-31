@@ -59,7 +59,7 @@ export default function Rsvp() {
   }
 
   return (
-    <Scene id="rsvp">
+    <Scene id="rsvp" divider="milho">
       <WoodFrame className="reveal mx-auto max-w-md" innerClassName="p-7">
         {status === "done" ? (
           <div className="reveal py-6 text-center">

@@ -7,7 +7,7 @@ import WoodFrame from "./WoodFrame.jsx";
 
 export default function Mapa() {
   return (
-    <Scene id="mapa">
+    <Scene id="mapa" divider="lampioes">
       <WoodFrame className="reveal mx-auto max-w-lg" innerClassName="p-5 sm:p-7">
         <div className="mb-3 text-center">
           <WoodSign>{event.recados.mapaTitle}</WoodSign>
