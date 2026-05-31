@@ -49,6 +49,12 @@ CREATE TABLE IF NOT EXISTS rsvps (
 );
 ```
 
+## Visual / animation notes
+
+- **Sky** ([src/components/Sky.jsx](src/components/Sky.jsx)) is the signature scroll piece: day→night gradient, parallax clouds, pulsing sun that sets, and a moon + stars at the bonfire end. It's driven by a **plain rAF-throttled scroll-progress state + direct inline styles**, NOT by motion's `useScroll`/`useTransform`. Reason: in this motion v12 + React 19 setup, a scroll-derived MotionValue bound to `opacity` did **not** flush to the DOM (transform flushed, opacity stayed frozen at its initial value), which froze the sun/moon/gradient. Don't reintroduce motion MotionValues for scroll-linked **opacity**. Idle motion (cloud drift, sun pulse, twinkle, moon bob) is pure CSS keyframes; everything respects `prefers-reduced-motion`.
+- **Embers** ([src/components/Embers.jsx](src/components/Embers.jsx)) is the one WebGL touch (Three.js + R3F), lazy-loaded via IntersectionObserver (separate chunk; off the initial bundle). Anchored `absolute` INSIDE the footer so it scrolls with the page. Per-particle size + alpha via a custom ShaderMaterial; each ember fades fully before the top. Guarded by reduced-motion + `ErrorBoundary` (no-op without WebGL).
+- **Visual self-check:** `node scripts/shots.mjs [url]` screenshots the running dev/preview at several scroll fractions using the system Chromium (`/usr/bin/chromium`) via Playwright. Use it to verify visual changes.
+
 ## Conventions
 
 - Never put secrets (Turnstile secret key, admin token) in client code — use Wrangler/Pages env vars / `.dev.vars` (gitignored).
