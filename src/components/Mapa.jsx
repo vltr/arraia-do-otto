@@ -3,11 +3,12 @@ import { googleMapsUrl, googleMapsEmbedUrl, wazeUrl } from "../lib/links.js";
 import Button from "./Button.jsx";
 import Scene from "./Scene.jsx";
 import WoodSign from "./WoodSign.jsx";
+import WoodFrame from "./WoodFrame.jsx";
 
 export default function Mapa() {
   return (
     <Scene id="mapa">
-      <div className="reveal mx-auto max-w-lg rounded-3xl border-4 border-[var(--color-festa-wood)]/40 bg-[var(--color-festa-cream)] p-5 shadow-[0_14px_30px_rgba(0,0,0,0.3)] sm:p-7">
+      <WoodFrame className="reveal mx-auto max-w-lg" innerClassName="p-5 sm:p-7">
         <div className="mb-3 text-center">
           <WoodSign>{event.recados.mapaTitle}</WoodSign>
         </div>
@@ -33,7 +34,7 @@ export default function Mapa() {
             🚗 Abrir no Waze
           </Button>
         </div>
-      </div>
+      </WoodFrame>
     </Scene>
   );
 }

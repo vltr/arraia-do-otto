@@ -4,6 +4,7 @@ import { celebrate } from "../lib/confetti.js";
 import Button from "./Button.jsx";
 import Scene from "./Scene.jsx";
 import WoodSign from "./WoodSign.jsx";
+import WoodFrame from "./WoodFrame.jsx";
 import Turnstile, { turnstileEnabled } from "./Turnstile.jsx";
 
 const fieldClass =
@@ -59,7 +60,7 @@ export default function Rsvp() {
 
   return (
     <Scene id="rsvp">
-      <div className="reveal mx-auto max-w-md rounded-3xl border-4 border-[var(--color-festa-wood)]/40 bg-[var(--color-festa-cream)] p-7 shadow-[0_16px_36px_rgba(0,0,0,0.35)]">
+      <WoodFrame className="reveal mx-auto max-w-md" innerClassName="p-7">
         {status === "done" ? (
           <div className="reveal py-6 text-center">
             <div className="text-5xl">🎉🔥</div>
@@ -137,7 +138,7 @@ export default function Rsvp() {
             </div>
           </form>
         )}
-      </div>
+      </WoodFrame>
     </Scene>
   );
 }
