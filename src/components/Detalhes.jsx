@@ -3,6 +3,7 @@ import { googleCalendarUrl, downloadIcs } from "../lib/calendar.js";
 import Button from "./Button.jsx";
 import Scene from "./Scene.jsx";
 import WoodSign from "./WoodSign.jsx";
+import WoodFrame from "./WoodFrame.jsx";
 
 function Row({ icon, label, value, sub }) {
   return (
@@ -28,7 +29,7 @@ function Row({ icon, label, value, sub }) {
 export default function Detalhes() {
   return (
     <Scene id="detalhes">
-      <div className="reveal mx-auto max-w-md rounded-3xl border-4 border-[var(--color-festa-wood)]/40 bg-[var(--color-festa-cream)] p-7 shadow-[0_14px_30px_rgba(0,0,0,0.3)]">
+      <WoodFrame className="reveal mx-auto max-w-md" innerClassName="p-6">
         <div className="mb-7 text-center">
           <WoodSign>Os detalhe do festerê</WoodSign>
         </div>
@@ -51,7 +52,7 @@ export default function Detalhes() {
             ⬇️ Baixar convite (.ics)
           </Button>
         </div>
-      </div>
+      </WoodFrame>
     </Scene>
   );
 }
