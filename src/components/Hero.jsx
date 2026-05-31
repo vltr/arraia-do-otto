@@ -6,7 +6,7 @@ import Scene from "./Scene.jsx";
 
 export default function Hero() {
   return (
-    <Scene id="hero" topBunting>
+    <Scene id="hero" divider="bunting">
       <div className="flex flex-col items-center gap-7 md:flex-row md:justify-center md:gap-14">
         {/* Otto welcome scene — below the text on mobile, left column on desktop */}
         <div

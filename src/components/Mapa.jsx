@@ -2,14 +2,15 @@ import { event } from "../data/event.js";
 import { googleMapsUrl, googleMapsEmbedUrl, wazeUrl } from "../lib/links.js";
 import Button from "./Button.jsx";
 import Scene from "./Scene.jsx";
+import WoodSign from "./WoodSign.jsx";
 
 export default function Mapa() {
   return (
     <Scene id="mapa">
       <div className="reveal mx-auto max-w-lg rounded-3xl border-4 border-[var(--color-festa-wood)]/40 bg-[var(--color-festa-cream)] p-5 shadow-[0_14px_30px_rgba(0,0,0,0.3)] sm:p-7">
-        <h2 className="font-display mb-1 text-center text-3xl text-[var(--color-festa-wood-dark)]">
-          {event.recados.mapaTitle}
-        </h2>
+        <div className="mb-3 text-center">
+          <WoodSign>{event.recados.mapaTitle}</WoodSign>
+        </div>
         <p className="font-body mb-4 text-center text-sm font-bold text-[var(--color-festa-wood)]/80">
           {event.venue} — {event.address}
         </p>

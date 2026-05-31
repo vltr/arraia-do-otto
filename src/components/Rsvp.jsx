@@ -3,6 +3,7 @@ import { event } from "../data/event.js";
 import { celebrate } from "../lib/confetti.js";
 import Button from "./Button.jsx";
 import Scene from "./Scene.jsx";
+import WoodSign from "./WoodSign.jsx";
 import Turnstile, { turnstileEnabled } from "./Turnstile.jsx";
 
 const fieldClass =
@@ -68,9 +69,9 @@ export default function Rsvp() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
-              <h2 className="font-display text-center text-3xl text-[var(--color-festa-wood-dark)]">
-                {event.recados.ctaRsvp}
-              </h2>
+              <div className="text-center">
+                <WoodSign>{event.recados.ctaRsvp}</WoodSign>
+              </div>
               <p className="font-body text-center text-sm text-[var(--color-festa-wood)]/80">
                 {event.recados.espera}
               </p>
