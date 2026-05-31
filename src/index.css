@@ -121,6 +121,11 @@ body {
 .star-twinkle { animation: twinkle 3.5s ease-in-out infinite; }
 .sun-pulse { animation: sun-pulse 5s ease-in-out infinite; }
 .moon-bob { animation: bob 7s ease-in-out infinite; }
+@keyframes lampiao-sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+.lampiao-sway { animation: lampiao-sway 4s ease-in-out infinite; }
 
 /* Respect reduced-motion: disable smooth scroll + heavy animation */
 @media (prefers-reduced-motion: reduce) {
@@ -133,6 +138,7 @@ body {
   .sun-pulse,
   .moon-bob,
   .sb-raybox,
+  .lampiao-sway,
   .reveal {
     animation: none;
   }
