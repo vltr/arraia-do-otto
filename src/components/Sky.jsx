@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useReducedMotion } from "motion/react";
 import Sun from "./Sun.jsx";
+import CloudField from "./CloudField.jsx";
 
 // Dynamic 2D sky: cross-fading day→night gradient, parallax clouds that thin out
 // toward night, a sun that gently pulses then sets, and a full moon + stars that
@@ -58,33 +59,11 @@ const GRADIENTS = [
   { bg: "radial-gradient(120% 80% at 50% 118%, #f08a24 0%, #b23a2e 22%, #4a1f48 55%, #2a1638 100%)", stops: [0.78, 0.92, 1], op: [0, 1, 1] },
 ];
 
-// top%, left%, scale, drift class, parallax strength (vh), base opacity
-const CLOUDS = [
-  { top: 8, left: 6, scale: 0.85, drift: "a", par: -90, op: 0.9 },
-  { top: 14, left: 64, scale: 1.15, drift: "b", par: -150, op: 0.95 },
-  { top: 24, left: 30, scale: 0.7, drift: "a", par: -60, op: 0.8 },
-  { top: 33, left: 78, scale: 0.9, drift: "b", par: -120, op: 0.85 },
-  { top: 5, left: 40, scale: 0.6, drift: "b", par: -40, op: 0.7 },
-];
-
 const STARS = [
   [12, 18], [22, 70], [30, 42], [8, 84], [18, 55], [40, 12], [46, 88],
   [52, 33], [60, 66], [15, 35], [36, 76], [50, 8], [26, 92], [44, 50],
   [6, 62], [33, 24], [58, 18], [62, 80], [10, 48], [38, 60],
 ];
-
-function CloudShape({ style }) {
-  return (
-    <svg viewBox="0 0 220 110" style={style} aria-hidden>
-      <g fill="#ffffff">
-        <ellipse cx="62" cy="70" rx="52" ry="30" />
-        <ellipse cx="112" cy="58" rx="48" ry="36" />
-        <ellipse cx="156" cy="72" rx="46" ry="28" />
-        <rect x="42" y="72" width="138" height="30" rx="15" />
-      </g>
-    </svg>
-  );
-}
 
 export default function Sky() {
   const reduce = useReducedMotion();
@@ -170,26 +149,8 @@ export default function Sky() {
         </div>
       </div>
 
-      {/* clouds — in FRONT of the sun/moon (clouds pass over them), parallax
-          (inline translateY) + idle drift (CSS, inner) */}
-      {CLOUDS.map((cloud, i) => (
-        <div
-          key={i}
-          className="absolute"
-          style={{
-            top: `${cloud.top}%`,
-            left: `${cloud.left}%`,
-            width: `${cloud.scale * 200}px`,
-            opacity: cloudFade,
-            transform: `translateY(${p * cloud.par}vh)`,
-            filter: "blur(0.4px) drop-shadow(0 6px 10px rgba(0,0,0,0.08))",
-          }}
-        >
-          <div className={cloud.drift === "a" ? "cloud-drift-a" : "cloud-drift-b"}>
-            <CloudShape style={{ width: "100%", opacity: cloud.op }} />
-          </div>
-        </div>
-      ))}
+      {/* clouds — in FRONT of the sun/moon (they pass over them) */}
+      <CloudField p={p} fade={cloudFade} />
 
       {/* grain */}
       <div

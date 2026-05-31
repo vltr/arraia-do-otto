@@ -40,14 +40,14 @@ body {
 }
 
 /* ---- Sky animations ---- */
-/* Gentle floating drift for clouds (back-and-forth, very slow). */
-@keyframes drift-a {
-  0% { transform: translateX(-2.5%); }
-  100% { transform: translateX(3.5%); }
+/* Clouds drift slowly across the sky; direction is chosen per session. */
+@keyframes cloud-cross-r {
+  from { transform: translateX(-40vw); }
+  to { transform: translateX(140vw); }
 }
-@keyframes drift-b {
-  0% { transform: translateX(2.5%); }
-  100% { transform: translateX(-3%); }
+@keyframes cloud-cross-l {
+  from { transform: translateX(140vw); }
+  to { transform: translateX(-40vw); }
 }
 @keyframes twinkle {
   0%, 100% { opacity: 0.25; }
@@ -116,8 +116,8 @@ body {
 .sb-ray9 { height: 80px; width: 10px; transform: rotate(120deg); top: -65px; left: -60px; }
 .sb-ray10 { height: 190px; width: 23px; transform: rotate(150deg); top: -185px; left: -60px; }
 
-.cloud-drift-a { animation: drift-a 26s ease-in-out infinite alternate; }
-.cloud-drift-b { animation: drift-b 34s ease-in-out infinite alternate; }
+.cloud-cross-r { animation-name: cloud-cross-r; animation-timing-function: linear; animation-iteration-count: infinite; }
+.cloud-cross-l { animation-name: cloud-cross-l; animation-timing-function: linear; animation-iteration-count: infinite; }
 .star-twinkle { animation: twinkle 3.5s ease-in-out infinite; }
 .sun-pulse { animation: sun-pulse 5s ease-in-out infinite; }
 .moon-bob { animation: bob 7s ease-in-out infinite; }
@@ -127,8 +127,8 @@ body {
   html {
     scroll-behavior: auto;
   }
-  .cloud-drift-a,
-  .cloud-drift-b,
+  .cloud-cross-r,
+  .cloud-cross-l,
   .star-twinkle,
   .sun-pulse,
   .moon-bob,
