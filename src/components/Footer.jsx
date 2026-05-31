@@ -85,14 +85,13 @@ export default function Footer() {
         </ErrorBoundary>
       )}
       <div className="relative z-10 flex flex-col items-center">
-      <div className="reveal w-full max-w-[min(70vw,280px)]">
-        <div className="aspect-[9/16] w-full overflow-hidden rounded-3xl border-4 border-[var(--color-festa-orange)]/70 shadow-[0_0_40px_rgba(240,138,36,0.45)]">
-          <OttoImage
-            src="/img/footer-despedida.webp"
-            alt="Otto sentado perto de uma fogueirinha acenando tchau, no fim da festa."
-            label="despedida"
-          />
-        </div>
+      <div className="reveal w-[min(86vw,440px)]">
+        <OttoImage
+          cutout
+          src="/img/footer-despedida.webp"
+          alt="Otto sentado perto de uma fogueirinha acenando tchau, no fim da festa."
+          label="despedida"
+        />
       </div>
 
       <p className="font-hand mt-6 text-3xl text-[var(--color-festa-corn)] drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
