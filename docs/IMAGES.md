@@ -18,11 +18,11 @@ All scenes are **9:16 portrait** for a consistent vertical rhythm when stacked o
 | # | Scene | Website role | Filename | Hair / light |
 |---|---|---|---|---|
 | 1 | Boas-vindas (espetinho) | **Hero** illustration (top, noon) | `hero-boas-vindas.webp` | blond / noon |
-| 2 | Guloseimas | Programação band | `prog-guloseimas.webp` | copper / afternoon |
-| 3 | Pescaria | Programação band | `prog-pescaria.webp` | copper / afternoon |
-| 4 | Quadrilha | Programação band | `prog-quadrilha.webp` | copper / golden hour |
-| 5 | Sanfoneiro | Programação band | `prog-sanfoneiro.webp` | copper / dusk |
-| 6 | Despedida (fogueira) | **Footer** illustration (bottom, night) | `footer-despedida.webp` | near-red / bonfire |
+| 2 | Guloseimas | Programação band | `prog-guloseimas.webp` | golden / afternoon |
+| 3 | Pescaria | Programação band | `prog-pescaria.webp` | golden / afternoon |
+| 4 | Quadrilha | Programação band | `prog-quadrilha.webp` | golden / golden hour |
+| 5 | Sanfoneiro | Programação band | `prog-sanfoneiro.webp` | golden / dusk |
+| 6 | Despedida (fogueira) | **Footer** illustration (bottom, night) | `footer-despedida.webp` | golden / bonfire |
 | A | Espiga gigante (reserve) | swap-in spare | `reserva-espiga.webp` | — |
 | B | Noivo caipira (reserve) | swap-in spare | `reserva-noivo.webp` | — |
 | C | Dono do arraiá (reserve) | swap-in spare | `reserva-dono.webp` | — |
@@ -33,20 +33,21 @@ keep the lossless master under `assets-raw/` (gitignored), and commit only the o
 
 ---
 
-## 2. Sky vs. site gradient — the compositing decision
+## 2. Compositing decision (UPDATED — owner: "Otto recortado + céu vivo")
 
-The site has a scroll-linked background gradient (noon → golden hour → dusk/bonfire).
-Each scene also carries its own time-of-day sky. To avoid two clashing gradients:
+The site now has a fully **animated** sky (scroll gradient + rotating sun, drifting clouds, moon,
+stars, bonfire embers). So:
 
-- **Keep each scene a full illustration with its own sky** (it *is* the environment — barraca,
-  fogueira, palco). The scenes are sequenced so their baked skies already run noon→night.
-- **The page gradient lives in the connective tissue** — hero copy area, the bunting dividers
-  between scenes, and the detalhes / mapa / RSVP / footer text blocks. It transitions in the
-  gaps, the illustrations punctuate it. No background removal needed for the main 6.
-- Bunting (bandeirinhas) is **CSS**, not baked into images, so dividers stay crisp and recolorable.
+- **Hero (top) + Footer (bottom) = TRANSPARENT CUTOUTS.** Generate Otto for these two with a plain
+  background and **remove the background on the Picsart web app** → export **transparent PNG**. They
+  composite directly over the live sky (sun/clouds behind him at the top; embers/moon at the bottom).
+  Do NOT bake a sky into these two — the CSS sky shows through. Filenames stay `hero-boas-vindas` and
+  `footer-despedida` but as **`.png`** (transparent), not `.webp`.
+- **The 4 Programação scenes = framed cards** (keep their own mini-scene/background). They sit inside
+  rounded "photo" frames between text, so a baked background is fine. WebP is fine for these.
+- Bunting (bandeirinhas) is **CSS**, not baked into images.
 
-If a scene's sky ever fights the section behind it, use Picsart **Remove Background** on that one
-to drop Otto + his stall onto the CSS gradient instead. Treat that as the exception, not the rule.
+Net: 2 transparent cutouts (hero, footer) + 4 framed scene cards (programação).
 
 ---
 
@@ -67,16 +68,20 @@ to drop Otto + his stall onto the CSS gradient instead. Treat that as the except
 
 ## 4. Anchor block — paste at the top of EVERY prompt (PT-BR, keep verbatim)
 
-> Ilustração 3D estilo animação Pixar, proporção 9:16, alta resolução. Personagem: Otto, bebê
-> risonho de 1 ano, olhos castanhos com tom acinzentado meio indefinível, cabelinho bem ralo e fino
-> com poucos fios levemente cacheados no topo da cabeça, bochechas redondas, vestido de caipira
-> (camisa xadrez vermelha, lenço no pescoço, chapéu de palha grande). Mesma carinha da foto de
-> referência. Render suave, cores quentes e saturadas, expressões cômicas e exageradas, fileira de
-> bandeirinhas coloridas na parte de cima, chão de terra batida embaixo, clima fofo e festivo de
-> festa junina.
+> Ilustração 3D estilo animação Pixar, alta resolução. Personagem: Otto, bebê risonho de 1 ano,
+> MESMA carinha da foto de referência — olhos castanhos com tom levemente acinzentado, bochechas
+> redondas e fofas, e cabelo de bebê **MUITO ralo e fininho** (pouquíssimos fios), de cor
+> **dourada/loira clara**. Vestido de caipira (camisa xadrez vermelha, lenço no pescoço, chapéu de
+> palha). Render suave, cores quentes e saturadas, expressões cômicas e exageradas, clima fofo e
+> festivo de festa junina.
 
-**Hair-color continuity:** Otto's wispy hair shifts with the light — **blond at noon, copper in
-the afternoon, almost red at dusk**. Apply per the scene's time of day.
+**Owner corrections (override older prompts):** grayish-brown eyes; hair is **very sparse baby hair,
+golden/blond** — NOT copper or red. Keep it golden throughout; at most a warm golden glow at dusk,
+never reddish.
+
+**⚠️ Generate on the Picsart WEB app, not the CLI/API.** The gen-ai API rejects real-child face
+references (`prohibited_content`); the web app allows Otto's reference photos. Reference photos live
+in `assets-raw/photos/` (gitignored) — the clearest front-facing one is the best face reference.
 
 ---
 
@@ -90,15 +95,15 @@ the afternoon, almost red at dusk**. Apply per the scene's time of day.
 > *Web note:* this is the hero — leave calm headroom at the top so the HTML countdown + CTA button
 > can overlay without covering Otto's face. Keep the wooden "ARRAIÁ DO OTTO" sign legible.
 
-### 2 — Guloseimas — afternoon, copper → `prog-guloseimas.webp`
+### 2 — Guloseimas — afternoon, golden hair → `prog-guloseimas.webp`
 > O Otto numa mesa lotada de guloseimas juninas — paçoquinha, bolo de milho, pipoca — se lambuzando
 > feliz, com migalhas grudadas no rosto. Luz de tarde, céu dourado-claro.
 
-### 3 — Pescaria — afternoon, copper → `prog-pescaria.webp`
+### 3 — Pescaria — afternoon, golden hair → `prog-pescaria.webp`
 > O Otto na barraca de pescaria, super concentrado, segurando uma vara e fisgando um patinho de
 > borracha, com expressão de orgulho exagerado. Barraquinhas e bandeirinhas ao fundo. Luz de tarde.
 
-### 4 — Quadrilha — golden hour, copper → `prog-quadrilha.webp`
+### 4 — Quadrilha — golden hour, golden hair → `prog-quadrilha.webp`
 > O Otto no meio da roda de quadrilha, sendo rodopiado no ar, gargalhando, com o chapéu de palha
 > voando. Plaquinha ao lado escrita "O úrtimo que chegá é a muié do padre!". Sensação de movimento
 > e alegria. Céu dourado de fim de tarde.
@@ -107,7 +112,7 @@ the afternoon, almost red at dusk**. Apply per the scene's time of day.
 > O Otto tentando tocar uma sanfona muito maior que ele, bochechas infladas, olhinhos fechados de
 > pura "concentração musical". Palco rústico ao fundo. Céu de entardecer, laranja puxando pro roxo.
 
-### 6 — Despedida / footer — night, bonfire, near-red → `footer-despedida.webp`
+### 6 — Despedida / footer — night, bonfire, warm golden → `footer-despedida.webp`
 > O Otto sentado perto de uma fogueirinha acenando tchau, expressão doce e sonolenta de fim de
 > festa. Luz quente de fogueira no rosto, céu noturno roxo-escuro com brilho laranja embaixo.
 
