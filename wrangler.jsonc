@@ -5,10 +5,10 @@
   "pages_build_output_dir": "dist",
   "d1_databases": [
     {
+      // Binding name MUST stay "DB" — functions/api/rsvp.js reads env.DB.
       "binding": "DB",
       "database_name": "rsvp-db",
-      // Filled in after `wrangler d1 create rsvp-db` (deploy phase).
-      "database_id": "PLACEHOLDER_AFTER_D1_CREATE"
+      "database_id": "1fd48f81-a469-459e-862a-f3b5a3eb7368"
     }
   ]
 }
