@@ -21,7 +21,10 @@ for (const f of FRACTIONS) {
   }, f);
   await page.waitForTimeout(1100); // let scroll-linked + idle anims settle
   const name = `${OUT}/shot-${String(Math.round(f * 100)).padStart(3, "0")}.png`;
-  await page.screenshot({ path: name });
+  // animations:"disabled" fast-forwards CSS animations to their end state.
+  // Headless Chromium freezes CSS-animation timelines at frame 0, so without
+  // this our `.reveal` (opacity 0→1) entrances would screenshot as invisible.
+  await page.screenshot({ path: name, animations: "disabled" });
   const prog = await page.evaluate(() => {
     const max = document.documentElement.scrollHeight - window.innerHeight;
     return max ? +(window.scrollY / max).toFixed(3) : 0;

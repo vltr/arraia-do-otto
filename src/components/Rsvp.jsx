@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { event } from "../data/event.js";
 import { celebrate } from "../lib/confetti.js";
 import Button from "./Button.jsx";
+import Scene from "./Scene.jsx";
 import Turnstile, { turnstileEnabled } from "./Turnstile.jsx";
 
 const fieldClass =
@@ -57,29 +57,17 @@ export default function Rsvp() {
   }
 
   return (
-    <section id="rsvp" className="px-5 py-16">
-      <div className="mx-auto max-w-md rounded-3xl border-4 border-[var(--color-festa-wood)]/40 bg-[var(--color-festa-cream)] p-7 shadow-[0_16px_36px_rgba(0,0,0,0.35)]">
-        <AnimatePresence mode="wait">
-          {status === "done" ? (
-            <motion.div
-              key="done"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="py-6 text-center"
-            >
-              <div className="text-5xl">🎉🔥</div>
-              <p className="font-hand mt-4 text-3xl leading-snug text-[var(--color-festa-red)]">
-                {event.recados.confirmado}
-              </p>
-            </motion.div>
-          ) : (
-            <motion.form
-              key="form"
-              onSubmit={handleSubmit}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="space-y-4"
-            >
+    <Scene id="rsvp">
+      <div className="reveal mx-auto max-w-md rounded-3xl border-4 border-[var(--color-festa-wood)]/40 bg-[var(--color-festa-cream)] p-7 shadow-[0_16px_36px_rgba(0,0,0,0.35)]">
+        {status === "done" ? (
+          <div className="reveal py-6 text-center">
+            <div className="text-5xl">🎉🔥</div>
+            <p className="font-hand mt-4 text-3xl leading-snug text-[var(--color-festa-red)]">
+              {event.recados.confirmado}
+            </p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4">
               <h2 className="font-display text-center text-3xl text-[var(--color-festa-wood-dark)]">
                 {event.recados.ctaRsvp}
               </h2>
@@ -141,15 +129,14 @@ export default function Rsvp() {
                 </p>
               )}
 
-              <div className="pt-1 text-center">
-                <Button type="submit" variant="green" className="w-full" disabled={status === "sending"}>
-                  {status === "sending" ? "Mandando…" : event.recados.ctaRsvp}
-                </Button>
-              </div>
-            </motion.form>
-          )}
-        </AnimatePresence>
+            <div className="pt-1 text-center">
+              <Button type="submit" variant="green" className="w-full" disabled={status === "sending"}>
+                {status === "sending" ? "Mandando…" : event.recados.ctaRsvp}
+              </Button>
+            </div>
+          </form>
+        )}
       </div>
-    </section>
+    </Scene>
   );
 }

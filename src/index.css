@@ -26,6 +26,8 @@
 /* ---- Base ---- */
 html {
   scroll-behavior: smooth;
+  /* Full-screen scenes gently snap into place. */
+  scroll-snap-type: y proximity;
 }
 
 body {
@@ -61,6 +63,14 @@ body {
   50% { transform: scale(1.05); opacity: 1; }
 }
 
+/* Reliable entrance reveal (CSS, not motion — motion's opacity binding is
+   unreliable in this setup). Stagger with an inline animation-delay. */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal { animation: reveal-up 0.6s ease-out both; }
+
 .cloud-drift-a { animation: drift-a 26s ease-in-out infinite alternate; }
 .cloud-drift-b { animation: drift-b 34s ease-in-out infinite alternate; }
 .star-twinkle { animation: twinkle 3.5s ease-in-out infinite; }
@@ -76,7 +86,8 @@ body {
   .cloud-drift-b,
   .star-twinkle,
   .sun-pulse,
-  .moon-bob {
+  .moon-bob,
+  .reveal {
     animation: none;
   }
 }

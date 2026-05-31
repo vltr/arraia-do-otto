@@ -1,5 +1,4 @@
 import Sky from "./components/Sky.jsx";
-import Bunting from "./components/Bunting.jsx";
 import Hero from "./components/Hero.jsx";
 import Detalhes from "./components/Detalhes.jsx";
 import Programacao from "./components/Programacao.jsx";
@@ -12,19 +11,14 @@ export default function App() {
   return (
     <>
       <Sky />
-      <div className="relative mx-auto max-w-3xl">
+      <main className="relative">
         <Hero />
-        <Bunting className="h-6" />
         <Detalhes />
-        <Bunting className="h-6" />
         <Programacao />
-        <Bunting className="h-6" />
         <Mapa />
-        <Bunting className="h-6" />
         <Rsvp />
-        <Bunting className="h-6" />
         <Footer />
-      </div>
+      </main>
       <FloatingCTA />
     </>
   );

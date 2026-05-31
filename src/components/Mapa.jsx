@@ -1,18 +1,12 @@
-import { motion } from "motion/react";
 import { event } from "../data/event.js";
 import { googleMapsUrl, googleMapsEmbedUrl, wazeUrl } from "../lib/links.js";
 import Button from "./Button.jsx";
+import Scene from "./Scene.jsx";
 
 export default function Mapa() {
   return (
-    <section id="mapa" className="px-5 py-14">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.5 }}
-        className="mx-auto max-w-md rounded-3xl border-4 border-[var(--color-festa-wood)]/40 bg-[var(--color-festa-cream)] p-5 shadow-[0_14px_30px_rgba(0,0,0,0.3)]"
-      >
+    <Scene id="mapa">
+      <div className="reveal mx-auto max-w-lg rounded-3xl border-4 border-[var(--color-festa-wood)]/40 bg-[var(--color-festa-cream)] p-5 shadow-[0_14px_30px_rgba(0,0,0,0.3)] sm:p-7">
         <h2 className="font-display mb-1 text-center text-3xl text-[var(--color-festa-wood-dark)]">
           {event.recados.mapaTitle}
         </h2>
@@ -24,7 +18,7 @@ export default function Mapa() {
           <iframe
             title={`Mapa: ${event.venue}`}
             src={googleMapsEmbedUrl()}
-            className="aspect-[4/3] w-full"
+            className="aspect-[4/3] w-full sm:aspect-video"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           />
@@ -38,7 +32,7 @@ export default function Mapa() {
             🚗 Abrir no Waze
           </Button>
         </div>
-      </motion.div>
-    </section>
+      </div>
+    </Scene>
   );
 }

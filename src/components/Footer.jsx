@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "motion/react";
 import { event } from "../data/event.js";
 import OttoImage from "./OttoImage.jsx";
 import ErrorBoundary from "./ErrorBoundary.jsx";
@@ -73,7 +73,7 @@ export default function Footer() {
   }, [reduce]);
 
   return (
-    <footer className="relative isolate px-5 pb-12 pt-10 text-center">
+    <footer className="relative isolate flex min-h-dvh snap-start flex-col justify-center px-5 pb-12 pt-10 text-center">
       <div ref={sentinelRef} aria-hidden className="pointer-events-none absolute -top-[40vh] h-px w-px" />
       {/* Embers are anchored INSIDE the footer (absolute), so they live at the
           bonfire and scroll with the page — not glued to the viewport. */}
@@ -85,13 +85,7 @@ export default function Footer() {
         </ErrorBoundary>
       )}
       <div className="relative z-10 flex flex-col items-center">
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.6 }}
-        className="w-full max-w-[min(70vw,280px)]"
-      >
+      <div className="reveal w-full max-w-[min(70vw,280px)]">
         <div className="aspect-[9/16] w-full overflow-hidden rounded-3xl border-4 border-[var(--color-festa-orange)]/70 shadow-[0_0_40px_rgba(240,138,36,0.45)]">
           <OttoImage
             src="/img/footer-despedida.webp"
@@ -99,7 +93,7 @@ export default function Footer() {
             label="despedida"
           />
         </div>
-      </motion.div>
+      </div>
 
       <p className="font-hand mt-6 text-3xl text-[var(--color-festa-corn)] drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
         {event.recados.espera}
