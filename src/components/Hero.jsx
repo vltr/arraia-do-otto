@@ -10,16 +10,15 @@ export default function Hero() {
       <div className="flex flex-col items-center gap-7 md:flex-row md:justify-center md:gap-14">
         {/* Otto welcome scene — below the text on mobile, left column on desktop */}
         <div
-          className="reveal order-2 w-[min(46vw,180px)] shrink-0 md:order-1 md:w-[300px]"
+          className="reveal order-2 w-[min(52vw,210px)] shrink-0 md:order-1 md:w-[300px]"
           style={{ animationDelay: "0.2s" }}
         >
-          <div className="aspect-[9/16] w-full overflow-hidden rounded-3xl border-4 border-[var(--color-festa-cream)] shadow-[0_12px_30px_rgba(0,0,0,0.35)]">
-            <OttoImage
-              src="/img/hero-boas-vindas.webp"
-              alt="Otto numa barraquinha de espetinhos dando as boas-vindas ao arraiá, ao meio-dia."
-              label="boas-vindas"
-            />
-          </div>
+          <OttoImage
+            cutout
+            src="/img/hero-boas-vindas.webp"
+            alt="Otto vestido de caipira, de chapéu de palha, acenando e segurando um espetinho — boas-vindas ao arraiá."
+            label="boas-vindas"
+          />
         </div>
 
         {/* Text column */}
