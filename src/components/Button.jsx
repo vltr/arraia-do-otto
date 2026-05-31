@@ -6,6 +6,7 @@ const VARIANTS = {
   corn: "bg-[var(--color-festa-corn)] text-[var(--color-festa-wood-dark)] shadow-[0_5px_0_#c79a1f]",
   cream:
     "bg-[var(--color-festa-cream)] text-[var(--color-festa-wood-dark)] shadow-[0_5px_0_#c9b48a]",
+  blue: "bg-[var(--color-sky-noon)] text-[var(--color-festa-cream)] shadow-[0_5px_0_#1f6f9e]",
 };
 
 export default function Button({

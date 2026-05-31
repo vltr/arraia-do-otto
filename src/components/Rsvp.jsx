@@ -88,8 +88,8 @@ export default function Rsvp() {
                 </legend>
                 <div className="grid grid-cols-2 gap-2">
                   {[
-                    { v: "sim", label: "Tô dentro! 🎉" },
-                    { v: "nao", label: "Num vô dá 😔" },
+                    { v: "sim", label: "Tô dentro! 🎉", on: "border-[var(--color-festa-green)] bg-[var(--color-festa-green)] text-[var(--color-festa-cream)]" },
+                    { v: "nao", label: "Num vô dá 😔", on: "border-[var(--color-festa-red)] bg-[var(--color-festa-red)] text-[var(--color-festa-cream)]" },
                   ].map((opt) => (
                     <button
                       key={opt.v}
@@ -98,7 +98,7 @@ export default function Rsvp() {
                       aria-pressed={attending === opt.v}
                       className={`rounded-xl border-2 px-3 py-3 font-body text-sm font-extrabold transition ${
                         attending === opt.v
-                          ? "border-[var(--color-festa-red)] bg-[var(--color-festa-red)] text-[var(--color-festa-cream)]"
+                          ? opt.on
                           : "border-[var(--color-festa-wood)]/30 bg-white text-[var(--color-festa-wood-dark)]"
                       }`}
                     >
@@ -130,7 +130,7 @@ export default function Rsvp() {
               )}
 
             <div className="pt-1 text-center">
-              <Button type="submit" variant="green" className="w-full" disabled={status === "sending"}>
+              <Button type="submit" variant="blue" className="w-full" disabled={status === "sending"}>
                 {status === "sending" ? "Mandando…" : event.recados.ctaRsvp}
               </Button>
             </div>
