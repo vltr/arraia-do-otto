@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useReducedMotion } from "motion/react";
+import Sun from "./Sun.jsx";
 
 // Dynamic 2D sky: cross-fading day→night gradient, parallax clouds that thin out
 // toward night, a sun that gently pulses then sets, and a full moon + stars that
@@ -22,15 +23,6 @@ function piece(p, stops, vals) {
     }
   }
   return vals[vals.length - 1];
-}
-
-const hex = (h) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
-function colorPiece(p, stops, hexVals) {
-  const rgb = hexVals.map(hex);
-  const r = Math.round(piece(p, stops, rgb.map((c) => c[0])));
-  const g = Math.round(piece(p, stops, rgb.map((c) => c[1])));
-  const b = Math.round(piece(p, stops, rgb.map((c) => c[2])));
-  return [r, g, b];
 }
 
 // rAF-throttled page scroll progress 0→1
@@ -111,13 +103,9 @@ export default function Sky() {
   const cloudFade = piece(p, [0, 0.5, 0.82], [1, 0.75, 0]);
   const starFade = piece(p, [0.72, 0.95], [0, 1]);
 
-  // sun
+  // sun (warm sunburst, see Sun.jsx) — fades out and drifts down as it sets
   const sunFade = piece(p, [0, 0.55, 0.74], [1, 1, 0]);
-  const sunDropPct = piece(p, [0, 0.74], [0, 160]); // % of own size
-  const [sr, sg, sb] = colorPiece(p, [0, 0.4, 0.72], ["#fff4c2", "#ffd76b", "#ff8a42"]);
-  const sunColor = `rgb(${sr}, ${sg}, ${sb})`;
-  const glowSize = piece(p, [0, 0.72], [62, 66]);
-  const sunGlow = `0 0 ${glowSize}px 24px rgba(${sr}, ${sg}, ${sb}, 0.8)`;
+  const sunDropPct = piece(p, [0, 0.74], [0, 60]); // translateY % of own size
 
   // moon
   const moonFade = piece(p, [0.74, 0.92], [0, 1]);
@@ -148,32 +136,16 @@ export default function Sky() {
         ))}
       </div>
 
-      {/* clouds — parallax (inline translateY) + idle drift (CSS, inner) */}
-      {CLOUDS.map((cloud, i) => (
-        <div
-          key={i}
-          className="absolute"
-          style={{
-            top: `${cloud.top}%`,
-            left: `${cloud.left}%`,
-            width: `${cloud.scale * 200}px`,
-            opacity: cloudFade,
-            transform: `translateY(${p * cloud.par}vh)`,
-            filter: "blur(0.4px) drop-shadow(0 6px 10px rgba(0,0,0,0.08))",
-          }}
-        >
-          <div className={cloud.drift === "a" ? "cloud-drift-a" : "cloud-drift-b"}>
-            <CloudShape style={{ width: "100%", opacity: cloud.op }} />
-          </div>
-        </div>
-      ))}
-
-      {/* sun — opacity + drop (inline) wrap a CSS-pulsing disc */}
+      {/* sun — warm sunburst (Sun.jsx). Outer: fade + drift (inline transform);
+          inner: responsive scale (Tailwind transform) on a separate element so
+          the two transforms don't collide. */}
       <div
-        className="absolute left-[64%] top-[11%] h-20 w-20"
+        className="absolute left-[68%] top-[13%]"
         style={{ opacity: sunFade, transform: `translateY(${sunDropPct}%)` }}
       >
-        <div className="sun-pulse h-full w-full rounded-full" style={{ backgroundColor: sunColor, boxShadow: sunGlow }} />
+        <div className="origin-center scale-[0.62] md:scale-110">
+          <Sun />
+        </div>
       </div>
 
       {/* moon — full moon (craters + halo), gentle bob */}
@@ -197,6 +169,27 @@ export default function Sky() {
           </div>
         </div>
       </div>
+
+      {/* clouds — in FRONT of the sun/moon (clouds pass over them), parallax
+          (inline translateY) + idle drift (CSS, inner) */}
+      {CLOUDS.map((cloud, i) => (
+        <div
+          key={i}
+          className="absolute"
+          style={{
+            top: `${cloud.top}%`,
+            left: `${cloud.left}%`,
+            width: `${cloud.scale * 200}px`,
+            opacity: cloudFade,
+            transform: `translateY(${p * cloud.par}vh)`,
+            filter: "blur(0.4px) drop-shadow(0 6px 10px rgba(0,0,0,0.08))",
+          }}
+        >
+          <div className={cloud.drift === "a" ? "cloud-drift-a" : "cloud-drift-b"}>
+            <CloudShape style={{ width: "100%", opacity: cloud.op }} />
+          </div>
+        </div>
+      ))}
 
       {/* grain */}
       <div
