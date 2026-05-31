@@ -17,7 +17,7 @@ export default function Programacao() {
               }`}
             >
               <div
-                className="reveal w-[min(54vw,210px)] shrink-0 md:w-[320px]"
+                className="reveal w-[min(62vw,260px)] shrink-0 md:w-[380px]"
                 style={{ animationDelay: "0.1s" }}
               >
                 <div className="aspect-[9/16] w-full overflow-hidden rounded-3xl border-4 border-[var(--color-festa-cream)] shadow-[0_12px_30px_rgba(0,0,0,0.35)]">

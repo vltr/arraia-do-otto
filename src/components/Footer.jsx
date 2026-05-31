@@ -85,7 +85,7 @@ export default function Footer() {
         </ErrorBoundary>
       )}
       <div className="relative z-10 flex flex-col items-center">
-      <div className="reveal w-[min(86vw,440px)]">
+      <div className="reveal w-[min(92vw,540px)]">
         <OttoImage
           cutout
           src="/img/footer-despedida.webp"

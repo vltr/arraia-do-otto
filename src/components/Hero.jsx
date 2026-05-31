@@ -10,7 +10,7 @@ export default function Hero() {
       <div className="flex flex-col items-center gap-7 md:flex-row md:justify-center md:gap-14">
         {/* Otto welcome scene — below the text on mobile, left column on desktop */}
         <div
-          className="reveal order-2 w-[min(52vw,210px)] shrink-0 md:order-1 md:w-[300px]"
+          className="reveal order-2 w-[min(60vw,260px)] shrink-0 md:order-1 md:w-[380px]"
           style={{ animationDelay: "0.2s" }}
         >
           <OttoImage
