@@ -9,13 +9,23 @@ Where a command opens a browser or prompts you, follow the prompt — values bel
 
 ---
 
-## 0. One-time: log in
+## 0. One-time: Cloudflare account + login
 
-```bash
-pnpm exec wrangler login
-```
+1. If you don't have an account yet, create one (free, no card for the free tier):
+   [dash.cloudflare.com/sign-up](https://dash.cloudflare.com/sign-up) — confirm the e-mail.
+2. Authenticate the CLI:
 
-Opens the browser; authorize. Confirm with `pnpm exec wrangler whoami`.
+   ```bash
+   pnpm exec wrangler login
+   ```
+
+   Opens the browser; click **Allow**. Confirm with:
+
+   ```bash
+   pnpm exec wrangler whoami
+   ```
+
+   It should print your account e-mail and account id.
 
 ---
 
@@ -27,7 +37,7 @@ pnpm exec wrangler d1 create rsvp-db
 
 It prints a block like:
 
-```
+```toml
 [[d1_databases]]
 binding = "DB"
 database_name = "rsvp-db"
@@ -92,6 +102,7 @@ pnpm exec wrangler pages deploy dist --project-name arraia-do-otto
 ```
 
 First run creates the Pages project — when prompted:
+
 - **Project name:** `arraia-do-otto`
 - **Production branch:** `main`
 
