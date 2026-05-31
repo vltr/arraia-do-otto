@@ -2,6 +2,7 @@ import { event } from "../data/event.js";
 import { googleCalendarUrl, downloadIcs } from "../lib/calendar.js";
 import Button from "./Button.jsx";
 import Scene from "./Scene.jsx";
+import WoodSign from "./WoodSign.jsx";
 
 function Row({ icon, label, value, sub }) {
   return (
@@ -28,9 +29,9 @@ export default function Detalhes() {
   return (
     <Scene id="detalhes">
       <div className="reveal mx-auto max-w-md rounded-3xl border-4 border-[var(--color-festa-wood)]/40 bg-[var(--color-festa-cream)] p-7 shadow-[0_14px_30px_rgba(0,0,0,0.3)]">
-        <h2 className="font-display mb-6 text-center text-3xl text-[var(--color-festa-wood-dark)]">
-          Os detalhe do festerê
-        </h2>
+        <div className="mb-7 text-center">
+          <WoodSign>Os detalhe do festerê</WoodSign>
+        </div>
 
         <div className="space-y-5">
           <Row icon="📅" label="Quando" value={event.dateLabel} sub={event.timeLabel} />
