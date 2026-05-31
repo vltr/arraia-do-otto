@@ -72,8 +72,8 @@ Net: 2 transparent cutouts (hero, footer) + 4 framed scene cards (programação)
 > MESMA carinha da foto de referência — olhos castanhos com tom levemente acinzentado, bochechas
 > redondas e fofas, e cabelo de bebê **MUITO ralo e fininho** (pouquíssimos fios), de cor
 > **dourada/loira clara**. Vestido de caipira (camisa xadrez vermelha, lenço no pescoço, chapéu de
-> palha). Render suave, cores quentes e saturadas, expressões cômicas e exageradas, clima fofo e
-> festivo de festa junina.
+> palha, **calça jeans** e, opcionalmente, **sapato ou bota de caipira**). Render suave, cores
+> quentes e saturadas, expressões cômicas e exageradas, clima fofo e festivo de festa junina.
 
 **Owner corrections (override older prompts):** grayish-brown eyes; hair is **very sparse baby hair,
 golden/blond** — NOT copper or red. Keep it golden throughout; at most a warm golden glow at dusk,
