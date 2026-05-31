@@ -1,4 +1,4 @@
-import ScrollSky from "./components/ScrollSky.jsx";
+import Sky from "./components/Sky.jsx";
 import Bunting from "./components/Bunting.jsx";
 import Hero from "./components/Hero.jsx";
 import Detalhes from "./components/Detalhes.jsx";
@@ -11,7 +11,7 @@ import FloatingCTA from "./components/FloatingCTA.jsx";
 export default function App() {
   return (
     <>
-      <ScrollSky />
+      <Sky />
       <div className="relative mx-auto max-w-3xl">
         <Hero />
         <Bunting className="h-6" />
