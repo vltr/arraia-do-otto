@@ -5,10 +5,10 @@ export default function WoodSign({ children, className = "" }) {
     "absolute h-2 w-2 rounded-full bg-[#2a1810] shadow-[inset_0_1px_1px_rgba(255,255,255,0.25)]";
   return (
     <div
-      className={`relative inline-block rounded-xl bg-[var(--color-festa-wood)] px-7 py-3 shadow-[0_6px_0_#3a2414,0_12px_20px_rgba(0,0,0,0.3)] ${className}`}
+      className={`relative inline-block overflow-hidden rounded-xl border-2 border-[#2a1810]/40 bg-[#5a3a1e] bg-[url('/img/wood.webp')] bg-cover bg-center px-7 py-3 shadow-[0_6px_0_#2a1810,0_12px_20px_rgba(0,0,0,0.35)] ${className}`}
     >
-      {/* wood grain */}
-      <div className="pointer-events-none absolute inset-0 rounded-xl opacity-25 [background:repeating-linear-gradient(90deg,rgba(0,0,0,0.18)_0_2px,transparent_2px_10px)]" />
+      {/* darken slightly so the cream text pops */}
+      <div className="pointer-events-none absolute inset-0 bg-black/15" />
       <span className={`${screw} left-2 top-2`} />
       <span className={`${screw} right-2 top-2`} />
       <span className={`${screw} bottom-2 left-2`} />
