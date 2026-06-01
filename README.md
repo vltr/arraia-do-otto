@@ -179,6 +179,35 @@ is committed as optimized WebP under `public/img/`.
 
 ---
 
+## Working from another machine (Cloudflare auth)
+
+`wrangler.jsonc` already points at the production resources (Pages project `arraia-do-otto`, D1
+`rsvp-db` with its `database_id`), so on a fresh machine you only need to **authenticate** wrangler
+with the Cloudflare account that owns them:
+
+```bash
+pnpm install
+pnpm exec wrangler login      # opens the browser → authorize the account (rkuesters@gmail.com)
+pnpm exec wrangler whoami     # confirm the email + account id
+```
+
+After that, deploy and the reports work as usual:
+
+```bash
+pnpm build && pnpm exec wrangler pages deploy dist --project-name arraia-do-otto
+pnpm rsvps                    # read production RSVPs
+```
+
+Notes:
+
+- **Secrets are not in git.** Copy `.env.example` → `.env` and `.dev.vars.example` → `.dev.vars`
+  only if/when you enable Turnstile (currently unused — nothing else is secret).
+- The **local** D1 lives under `.wrangler/` (gitignored), per machine. For local full-stack dev,
+  recreate it: `pnpm exec wrangler d1 execute rsvp-db --local --file ./schema.sql` (then any
+  `migrations/*.sql`).
+- For **CI/headless** (no browser for OAuth), set a `CLOUDFLARE_API_TOKEN` env var with **Pages**
+  (edit) + **D1** (edit) permissions instead of `wrangler login`.
+
 ## Deployment
 
 Cloudflare Pages, project `arraia-do-otto`, served on the custom domain `ottok.com.br`.
