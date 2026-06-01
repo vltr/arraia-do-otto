@@ -88,7 +88,7 @@ export default function Rsvp() {
             </p>
             {attending === "sim" && count > 1 && (
               <p className="font-body mt-3 text-sm font-bold text-[var(--color-festa-wood-dark)]">
-                Anotei cês {count}, viu! 🎉
+                Anotei cês {count}, viu? 🎉
               </p>
             )}
           </div>
