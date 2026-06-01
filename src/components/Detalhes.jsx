@@ -44,7 +44,11 @@ export default function Detalhes() {
           />
         </div>
 
-        <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-center">
+        <p className="font-hand mt-5 text-center text-2xl leading-snug text-[var(--color-festa-wood)]">
+          {event.recados.traje}
+        </p>
+
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
           <Button as="a" href={googleCalendarUrl()} target="_blank" rel="noopener" variant="green">
             📆 Google Agenda
           </Button>

@@ -26,6 +26,7 @@ export const event = {
     espera: "Esperamo cê lá, viu?",
     quentao: "Vai tê quentão pros grandi e muita brincadeira pros pequeno!",
     mapaTitle: "Pra num se perdê no caminho",
+    traje: "Traje caipira é opcional, mas a farra obrigatória. E ó: cê vai acabá virando caipira do mesmo jeito, viu?",
     confirmado:
       "Oba! Tá confirmado, ó! Agora é só num atrasá — lembra: o úrtimo que chegá é a muié do padre! 🔥",
     naoVem: "Poxa, que pena que cê num vai podê vim! 😢 Fica pra próxima, viu? Um beijo do Otto! 💛",
