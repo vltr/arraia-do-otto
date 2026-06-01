@@ -11,8 +11,9 @@
       "database_id": "1fd48f81-a469-459e-862a-f3b5a3eb7368"
     }
   ],
-  // Email Sending: notify the owner on each RSVP. Requires the domain onboarded
-  // (Email → Email Sending on ottok.com.br). The Function reads env.EMAIL and
-  // no-ops if the binding is absent, so it's safe before onboarding.
-  "send_email": [{ "name": "EMAIL" }]
+  // Email Routing send_email binding: notify the owner on each RSVP. Requires
+  // Email Routing enabled on ottok.com.br + the destination (rkuesters@gmail.com)
+  // added & verified as a Destination address. Sends only to that address. The
+  // Function no-ops if env.EMAIL is absent, so it's safe before setup.
+  "send_email": [{ "name": "EMAIL", "destination_address": "rkuesters@gmail.com" }]
 }

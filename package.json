@@ -25,6 +25,7 @@
   "dependencies": {
     "@react-three/fiber": "^9.6.1",
     "canvas-confetti": "^1.9.4",
+    "mimetext": "^3.0.28",
     "motion": "^12.40.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",

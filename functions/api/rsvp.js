@@ -24,10 +24,14 @@ function cleanPerson(p) {
 const escapeHtml = (s) =>
   String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
-// Email the owner a summary of one submission. No-op without the EMAIL binding
-// (local dev / before onboarding). Never throws to the caller.
+// Email the owner a summary of one submission via the Email Routing send_email
+// binding (cloudflare:email + mimetext). No-op without the EMAIL binding (local
+// dev / before setup). Never throws to the caller.
 async function notifyOwner(env, { primary, attending, companions, count }) {
   if (!env.EMAIL) return;
+  const { EmailMessage } = await import("cloudflare:email");
+  const { createMimeMessage } = await import("mimetext");
+
   const status = attending ? "VAI ✅" : "não vai ❌";
   const lines = [`Responsável: ${primary.name} — ${status}${primary.dietary ? ` · ${primary.dietary}` : ""}`];
   if (companions.length) {
@@ -40,8 +44,15 @@ async function notifyOwner(env, { primary, attending, companions, count }) {
     <h2 style="margin:0 0 8px">🎪 Novo RSVP — Arraiá do Otto</h2>
     ${lines.map((l) => `<p style="margin:2px 0">${escapeHtml(l)}</p>`).join("")}
   </div>`;
-  const subject = `🎪 RSVP: ${primary.name} ${attending ? "vem" : "não vem"}${companions.length ? ` (+${companions.length})` : ""}`;
-  await env.EMAIL.send({ to: OWNER_EMAIL, from: FROM, subject, text, html });
+
+  const msg = createMimeMessage();
+  msg.setSender({ name: FROM.name, addr: FROM.email });
+  msg.setRecipient(OWNER_EMAIL);
+  msg.setSubject(`🎪 RSVP: ${primary.name} ${attending ? "vem" : "não vem"}${companions.length ? ` (+${companions.length})` : ""}`);
+  msg.addMessage({ contentType: "text/plain", data: text });
+  msg.addMessage({ contentType: "text/html", data: html });
+
+  await env.EMAIL.send(new EmailMessage(FROM.email, OWNER_EMAIL, msg.asRaw()));
 }
 
 function json(data, status = 200) {
