@@ -10,7 +10,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "pages:dev": "wrangler pages dev",
-    "og": "node scripts/make-og.mjs"
+    "og": "node scripts/make-og.mjs",
+    "rsvps": "node scripts/rsvps.mjs"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
