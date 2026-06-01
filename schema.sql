@@ -6,5 +6,6 @@ CREATE TABLE IF NOT EXISTS rsvps (
   name        TEXT NOT NULL,
   attending   INTEGER NOT NULL,        -- 1 = vem, 0 = não vem
   dietary     TEXT,                    -- restrição alimentar (opcional)
+  group_id    TEXT,                    -- mesmo id pras pessoas de um mesmo envio (núcleo); NULL = solo
   created_at  TEXT NOT NULL DEFAULT (datetime('now'))
 );

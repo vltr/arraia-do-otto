@@ -28,6 +28,7 @@ export const event = {
     mapaTitle: "Pra num se perdê no caminho",
     confirmado:
       "Oba! Tá confirmado, ó! Agora é só num atrasá — lembra: o úrtimo que chegá é a muié do padre! 🔥",
+    naoVem: "Poxa, que pena que cê num vai podê vim! 😢 Fica pra próxima, viu? Um beijo do Otto! 💛",
     assinatura: "Feito com muuuuito amô pela mamãe e pelo papai do Otto ❤️",
   },
 };

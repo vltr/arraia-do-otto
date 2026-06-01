@@ -7,6 +7,14 @@
 
 const MAX_NAME = 120;
 const MAX_DIETARY = 500;
+const MAX_COMPANIONS = 8;
+
+// Clean a person record from raw input.
+function cleanPerson(p) {
+  const name = String(p?.name || "").trim();
+  const dietary = String(p?.dietary || "").trim().slice(0, MAX_DIETARY) || null;
+  return { name, dietary };
+}
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -43,15 +51,23 @@ async function handlePost(context) {
     return json({ ok: true });
   }
 
-  const name = String(payload.name || "").trim();
   const attending = payload.attending === 1 || payload.attending === "1" ? 1 : 0;
-  const dietary = String(payload.dietary || "").trim().slice(0, MAX_DIETARY) || null;
+  const primary = cleanPerson(payload);
 
-  if (!name || name.length > MAX_NAME) {
+  if (!primary.name || primary.name.length > MAX_NAME) {
     return json({ ok: false, error: "nome inválido" }, 400);
   }
 
-  // Turnstile — enforced whenever a secret is configured.
+  // Companions: only when the primary is coming. Drop blanks, validate, cap.
+  let companions = [];
+  if (attending === 1 && Array.isArray(payload.companions)) {
+    companions = payload.companions
+      .map(cleanPerson)
+      .filter((c) => c.name.length > 0 && c.name.length <= MAX_NAME)
+      .slice(0, MAX_COMPANIONS);
+  }
+
+  // Turnstile — enforced whenever a secret is configured (once per submission).
   if (env.TURNSTILE_SECRET_KEY) {
     const ip = request.headers.get("CF-Connecting-IP");
     const ok = await verifyTurnstile(
@@ -66,17 +82,25 @@ async function handlePost(context) {
     return json({ ok: false, error: "banco indisponível" }, 500);
   }
 
+  // A shared group_id ties a household together (NULL when it's a solo RSVP).
+  const groupId = companions.length > 0 ? crypto.randomUUID() : null;
+  const people = [
+    { name: primary.name, attending, dietary: primary.dietary },
+    ...companions.map((c) => ({ name: c.name, attending: 1, dietary: c.dietary })),
+  ];
+
   try {
-    await env.DB.prepare(
-      "INSERT INTO rsvps (name, attending, dietary) VALUES (?, ?, ?)",
-    )
-      .bind(name, attending, dietary)
-      .run();
+    const stmt = env.DB.prepare(
+      "INSERT INTO rsvps (name, attending, dietary, group_id) VALUES (?, ?, ?, ?)",
+    );
+    await env.DB.batch(
+      people.map((p) => stmt.bind(p.name, p.attending, p.dietary, groupId)),
+    );
   } catch {
     return json({ ok: false, error: "erro ao salvar" }, 500);
   }
 
-  return json({ ok: true });
+  return json({ ok: true, count: people.length });
 }
 
 export async function onRequest(context) {

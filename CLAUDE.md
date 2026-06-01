@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS rsvps (
   name        TEXT NOT NULL,
   attending   INTEGER NOT NULL,        -- 1 = yes, 0 = no
   dietary     TEXT,                    -- optional, nullable
+  group_id    TEXT,                    -- shared per household submission; NULL = solo
   created_at  TEXT NOT NULL DEFAULT (datetime('now'))
 );
 ```
@@ -75,10 +76,15 @@ CREATE TABLE IF NOT EXISTS rsvps (
 
 ## RSVP backend (`functions/api/rsvp.js`)
 
-`POST /api/rsvp` accepts JSON `{ name, attending (1|0), dietary, fax (honeypot), turnstileToken }`.
-Order: reject bad JSON (400) → honeypot `fax` non-empty returns `{ok:true}` with NO insert →
-validate name (400 if empty / >120) → verify Turnstile **only if `TURNSTILE_SECRET_KEY` is set**
-(403 on fail) → insert into D1 → `{ok:true}`. Tested locally; honeypot/validation/405/400 all pass.
+`POST /api/rsvp` accepts JSON `{ name, attending (1|0), dietary, companions:[{name,dietary}],
+fax (honeypot), turnstileToken }`. Order: reject bad JSON (400) → honeypot `fax` non-empty returns
+`{ok:true}` with NO insert → validate primary name (400 if empty / >120) → keep companions only when
+attending=1 (drop blanks, cap 8) → verify Turnstile **only if `TURNSTILE_SECRET_KEY` is set** (403 on
+fail) → **one row per person** (primary + companions=attending 1), all sharing a `group_id`
+(`crypto.randomUUID()`; NULL when solo), inserted via `DB.batch` → `{ok:true, count}`. The old
+single-person payload still works (no companions → group_id NULL). Tested locally: group (count 3,
+shared id) + solo-não-vem (count 1, companion dropped); honeypot/validation/405/400 all pass.
+Migration `migrations/0001_add_group_id.sql` applied to local + remote.
 
 ### Deploy — LIVE ✅
 
