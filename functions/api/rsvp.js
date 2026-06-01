@@ -9,50 +9,11 @@ const MAX_NAME = 120;
 const MAX_DIETARY = 500;
 const MAX_COMPANIONS = 8;
 
-// Owner notification (Cloudflare Email Sending). FROM must be on a domain
-// onboarded to Email Sending (ottok.com.br). Sent fire-and-forget.
-const OWNER_EMAIL = "rkuesters@gmail.com";
-const FROM = { email: "rsvp@ottok.com.br", name: "Arraiá do Otto" };
-
 // Clean a person record from raw input.
 function cleanPerson(p) {
   const name = String(p?.name || "").trim();
   const dietary = String(p?.dietary || "").trim().slice(0, MAX_DIETARY) || null;
   return { name, dietary };
-}
-
-const escapeHtml = (s) =>
-  String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-
-// Email the owner a summary of one submission via the Email Routing send_email
-// binding (cloudflare:email + mimetext). No-op without the EMAIL binding (local
-// dev / before setup). Never throws to the caller.
-async function notifyOwner(env, { primary, attending, companions, count }) {
-  if (!env.EMAIL) return;
-  const { EmailMessage } = await import("cloudflare:email");
-  const { createMimeMessage } = await import("mimetext");
-
-  const status = attending ? "VAI ✅" : "não vai ❌";
-  const lines = [`Responsável: ${primary.name} — ${status}${primary.dietary ? ` · ${primary.dietary}` : ""}`];
-  if (companions.length) {
-    lines.push("Acompanhantes:");
-    for (const c of companions) lines.push(`• ${c.name}${c.dietary ? ` · ${c.dietary}` : ""}`);
-    lines.push(`Total: ${count} pessoa(s)`);
-  }
-  const text = lines.join("\n");
-  const html = `<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.5;color:#3a2410">
-    <h2 style="margin:0 0 8px">🎪 Novo RSVP — Arraiá do Otto</h2>
-    ${lines.map((l) => `<p style="margin:2px 0">${escapeHtml(l)}</p>`).join("")}
-  </div>`;
-
-  const msg = createMimeMessage();
-  msg.setSender({ name: FROM.name, addr: FROM.email });
-  msg.setRecipient(OWNER_EMAIL);
-  msg.setSubject(`🎪 RSVP: ${primary.name} ${attending ? "vem" : "não vem"}${companions.length ? ` (+${companions.length})` : ""}`);
-  msg.addMessage({ contentType: "text/plain", data: text });
-  msg.addMessage({ contentType: "text/html", data: html });
-
-  await env.EMAIL.send(new EmailMessage(FROM.email, OWNER_EMAIL, msg.asRaw()));
 }
 
 function json(data, status = 200) {
@@ -138,11 +99,6 @@ async function handlePost(context) {
   } catch {
     return json({ ok: false, error: "erro ao salvar" }, 500);
   }
-
-  // Notify the owner in the background — never blocks or fails the RSVP.
-  context.waitUntil(
-    notifyOwner(env, { primary, attending, companions, count: people.length }).catch(() => {}),
-  );
 
   return json({ ok: true, count: people.length });
 }
