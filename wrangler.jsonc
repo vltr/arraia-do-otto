@@ -10,5 +10,9 @@
       "database_name": "rsvp-db",
       "database_id": "1fd48f81-a469-459e-862a-f3b5a3eb7368"
     }
-  ]
+  ],
+  // Email Sending: notify the owner on each RSVP. Requires the domain onboarded
+  // (Email → Email Sending on ottok.com.br). The Function reads env.EMAIL and
+  // no-ops if the binding is absent, so it's safe before onboarding.
+  "send_email": [{ "name": "EMAIL" }]
 }
