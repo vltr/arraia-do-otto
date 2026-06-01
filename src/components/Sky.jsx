@@ -26,6 +26,16 @@ function piece(p, stops, vals) {
   return vals[vals.length - 1];
 }
 
+// Representative sky color per scroll stage, for the browser UI (theme-color +
+// body bg) so Android Chrome's bars follow the day→night transition.
+const hexRgb = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+function skyThemeColor(p) {
+  const cols = ["#2b9bd4", "#f0a23a", "#8a3b6b", "#2a1638"].map(hexRgb);
+  const stops = [0, 0.45, 0.72, 1];
+  const ch = (k) => Math.round(piece(p, stops, cols.map((c) => c[k])));
+  return `rgb(${ch(0)}, ${ch(1)}, ${ch(2)})`;
+}
+
 // rAF-throttled page scroll progress 0→1
 function useScrollProgress() {
   const [p, setP] = useState(0);
@@ -68,6 +78,13 @@ const STARS = [
 export default function Sky() {
   const reduce = useReducedMotion();
   const p = useScrollProgress();
+
+  // Browser UI (Android Chrome top/bottom bars) follows the sky as you scroll.
+  const themeColor = skyThemeColor(p);
+  useEffect(() => {
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", themeColor);
+    document.body.style.backgroundColor = themeColor;
+  }, [themeColor]);
 
   if (reduce) {
     return (
