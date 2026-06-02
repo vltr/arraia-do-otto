@@ -8,6 +8,8 @@ few weeks around the event).
 
 > Event: Saturday **2026-06-27**, 12:00–18:00, Arena Bombinhas — Rua Araçá, 551, Sertãozinho.
 
+> Built end-to-end with **Claude Code as a platform** — project memory + skill-invocation conventions in [`CLAUDE.md`](CLAUDE.md); [`.claude/settings.json`](.claude/settings.json) wires the `frontend-design` / `cloudflare` / `playwright` plugins; visual self-check via [`scripts/shots.mjs`](scripts/shots.mjs) (Playwright + system Chromium) so visual changes get verified during the build loop.
+
 ---
 
 ## What it is
