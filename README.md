@@ -43,7 +43,7 @@ free tier ($0/month).
 - **Hosting:** Cloudflare Pages.
 - **Backend:** Cloudflare Pages Function (`POST /api/rsvp`).
 - **Database:** Cloudflare D1 (SQLite), table `rsvps`.
-- **Anti-spam:** hidden honeypot + (optional) Cloudflare Turnstile.
+- **Anti-spam:** hidden honeypot + Cloudflare Turnstile (server-verified).
 - **Package manager:** pnpm.
 
 ---
@@ -200,8 +200,10 @@ pnpm rsvps                    # read production RSVPs
 
 Notes:
 
-- **Secrets are not in git.** Copy `.env.example` → `.env` and `.dev.vars.example` → `.dev.vars`
-  only if/when you enable Turnstile (currently unused — nothing else is secret).
+- **Secrets are not in git.** Copy `.env.example` → `.env` (Turnstile **site** key) and
+  `.dev.vars.example` → `.dev.vars` (Turnstile **secret** key) for local full-stack dev. In prod the
+  secret is a Pages secret (`wrangler pages secret put TURNSTILE_SECRET_KEY`); the site key bakes into
+  the build from `.env`.
 - The **local** D1 lives under `.wrangler/` (gitignored), per machine. For local full-stack dev,
   recreate it: `pnpm exec wrangler d1 execute rsvp-db --local --file ./schema.sql` (then any
   `migrations/*.sql`).
@@ -242,8 +244,8 @@ flush to the DOM in this motion v12 + React 19 setup).
 ## TODO / ideas
 
 - [ ] **CSV export** of the guest list for the caterer (headcount) — closer to the event.
-- [ ] **Turnstile** anti-spam — keys not yet configured (honeypot is active; set
-  `VITE_TURNSTILE_SITE_KEY` + the secret to enable).
+- [x] **Turnstile** anti-spam — live since 2026-06-02 (managed widget + server verification, alongside
+  the honeypot).
 - [ ] **Email-on-RSVP** notification — deferred; Pages Functions can't use the `send_email` binding,
   so it'd need a companion Worker or a transactional API.
 - [ ] Optional `www → apex` redirect for a canonical URL.

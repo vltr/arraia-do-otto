@@ -93,7 +93,10 @@ Cloudflare; added as Pages custom domains). OG/Twitter meta + `og:url` point to 
 Deployed 2026-05-31 to **[arraia-do-otto.pages.dev](https://arraia-do-otto.pages.dev)** (Pages project `arraia-do-otto`,
 production branch `main`). D1 `rsvp-db` id `1fd48f81-a469-459e-862a-f3b5a3eb7368`, binding `DB`,
 schema applied remote. Full prod round-trip verified (POST /api/rsvp → D1 write → delete).
-**Turnstile not yet configured** — honeypot only until the owner adds the widget keys.
+**Turnstile LIVE** (configured 2026-06-02) — managed widget on the RSVP form, server-verified.
+Site key in `.env` (`VITE_TURNSTILE_SITE_KEY`, public, baked at build); secret set as a Pages secret
+via `wrangler pages secret put TURNSTILE_SECRET_KEY` (also in local `.dev.vars`, gitignored). Widget
+domains: `ottok.com.br`, `www.ottok.com.br`, `localhost`. Prod enforcement verified (bogus token → 403).
 Update loop: `pnpm build && pnpm exec wrangler pages deploy dist --project-name arraia-do-otto`.
 
 Full copy-pasteable guide: **[docs/DEPLOY.md](docs/DEPLOY.md)**. Summary: `wrangler login` →
