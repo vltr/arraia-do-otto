@@ -22,7 +22,7 @@ Authoritative specs live in [docs/](docs/): [docs/SPEC.md](docs/SPEC.md) (full b
 - **Hosting:** Cloudflare Pages (Vite build output).
 - **RSVP backend:** Cloudflare Pages Function — `POST /api/rsvp`.
 - **Database:** Cloudflare D1 (SQLite), table `rsvps`.
-- **Anti-spam:** Cloudflare Turnstile (server-verified) + hidden honeypot field.
+- **Anti-spam:** hidden honeypot field. (Turnstile is wired but **disabled** — see deploy notes.)
 - **Cost target:** $0/month, all within Cloudflare free tier.
 
 ## Decisions made with the owner (override the spec docs)
@@ -93,10 +93,14 @@ Cloudflare; added as Pages custom domains). OG/Twitter meta + `og:url` point to 
 Deployed 2026-05-31 to **[arraia-do-otto.pages.dev](https://arraia-do-otto.pages.dev)** (Pages project `arraia-do-otto`,
 production branch `main`). D1 `rsvp-db` id `1fd48f81-a469-459e-862a-f3b5a3eb7368`, binding `DB`,
 schema applied remote. Full prod round-trip verified (POST /api/rsvp → D1 write → delete).
-**Turnstile LIVE** (configured 2026-06-02) — managed widget on the RSVP form, server-verified.
-Site key in `.env` (`VITE_TURNSTILE_SITE_KEY`, public, baked at build); secret set as a Pages secret
-via `wrangler pages secret put TURNSTILE_SECRET_KEY` (also in local `.dev.vars`, gitignored). Widget
-domains: `ottok.com.br`, `www.ottok.com.br`, `localhost`. Prod enforcement verified (bogus token → 403).
+**Turnstile DISABLED (2026-06-03) — honeypot only.** It was live 2026-06-02 but the managed widget
+**blocked legitimate guests** on Safari, Samsung Internet, and other browsers (no token → backend 403),
+so it was rolled back. To disable: prod Pages secret deleted
+(`wrangler pages secret delete TURNSTILE_SECRET_KEY --project-name arraia-do-otto`) so the backend
+gate `if (env.TURNSTILE_SECRET_KEY)` is skipped, and rebuilt with `VITE_TURNSTILE_SITE_KEY` commented
+out in `.env` so the widget never renders. Verified: tokenless POST /api/rsvp → 200. The code path is
+intact — to re-enable, restore both keys (set the secret + uncomment the site key, rebuild, deploy).
+**Both gates must move together**: a secret with no widget would 403 every submission.
 Update loop: `pnpm build && pnpm exec wrangler pages deploy dist --project-name arraia-do-otto`.
 
 Full copy-pasteable guide: **[docs/DEPLOY.md](docs/DEPLOY.md)**. Summary: `wrangler login` →

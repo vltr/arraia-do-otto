@@ -27,7 +27,7 @@ free tier ($0/month).
   Three.js/R3F, lazy-loaded and code-split).
 - **Full-screen scenes** with gentle scroll-snap; 2-column on desktop, compact on mobile.
 - **Group RSVP** — a responsável confirms for the whole household (add/remove acompanhantes); one row
-  per person sharing a `group_id`. Honeypot + optional Turnstile anti-spam. Confetti on success.
+  per person sharing a `group_id`. Honeypot anti-spam (Turnstile wired but disabled). Confetti on success.
 - **Rustic touches** — wood-textured plaques/frames, garland separators (lanterns, balloons, corn,
   candy apples) built from single generated elements tiled/hung via CSS.
 - **Browser chrome follows the sky** — `theme-color` + body background animate with scroll (nice on
@@ -45,7 +45,7 @@ free tier ($0/month).
 - **Hosting:** Cloudflare Pages.
 - **Backend:** Cloudflare Pages Function (`POST /api/rsvp`).
 - **Database:** Cloudflare D1 (SQLite), table `rsvps`.
-- **Anti-spam:** hidden honeypot + Cloudflare Turnstile (server-verified).
+- **Anti-spam:** hidden honeypot. (Cloudflare Turnstile is wired but currently disabled.)
 - **Package manager:** pnpm.
 
 ---
@@ -202,10 +202,10 @@ pnpm rsvps                    # read production RSVPs
 
 Notes:
 
-- **Secrets are not in git.** Copy `.env.example` → `.env` (Turnstile **site** key) and
-  `.dev.vars.example` → `.dev.vars` (Turnstile **secret** key) for local full-stack dev. In prod the
-  secret is a Pages secret (`wrangler pages secret put TURNSTILE_SECRET_KEY`); the site key bakes into
-  the build from `.env`.
+- **Secrets are not in git.** Nothing is secret while Turnstile is disabled. If you re-enable it, put
+  the **site** key in `.env` (`.env.example` → `.env`, baked into the build) and the **secret** key in
+  `.dev.vars` for local dev / a Pages secret (`wrangler pages secret put TURNSTILE_SECRET_KEY`) for
+  prod — and remember both gates must move together (a secret with no widget 403s every submission).
 - The **local** D1 lives under `.wrangler/` (gitignored), per machine. For local full-stack dev,
   recreate it: `pnpm exec wrangler d1 execute rsvp-db --local --file ./schema.sql` (then any
   `migrations/*.sql`).
@@ -246,8 +246,9 @@ flush to the DOM in this motion v12 + React 19 setup).
 ## TODO / ideas
 
 - [ ] **CSV export** of the guest list for the caterer (headcount) — closer to the event.
-- [x] **Turnstile** anti-spam — live since 2026-06-02 (managed widget + server verification, alongside
-  the honeypot).
+- [ ] **Turnstile** anti-spam — wired but **disabled** (2026-06-03): the managed widget blocked
+  legit guests on Safari / Samsung Internet. Honeypot stays active. Revisit only with a non-blocking
+  config (e.g. invisible mode) if spam becomes a problem.
 - [ ] **Email-on-RSVP** notification — deferred; Pages Functions can't use the `send_email` binding,
   so it'd need a companion Worker or a transactional API.
 - [ ] Optional `www → apex` redirect for a canonical URL.
